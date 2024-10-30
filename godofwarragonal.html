@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Game Listings</title>
+    <style>
+        /* Existing styles... */
+    </style>
+</head>
+<body>
+
+<div class="product-detail">
+    <div class="product-image">
+        <img src="needforspeedpayback.jpg" alt="Need for Speed Payback Deluxe Edition">
+    </div>
+    <div class="product-info">
+        <h1>Need for Speed Payback Deluxe Edition</h1>
+        <p class="price" id="price-nfs">₹349</p>
+        <ul class="details">
+            <li><strong>Genre:</strong> Racing</li>
+            <li><strong>Platform:</strong> PC, Xbox, PlayStation</li>
+            <li><strong>Release Date:</strong> 10 November 2017</li>
+            <li><strong>Developer:</strong> Ghost Games</li>
+            <li><strong>Publisher:</strong> Electronic Arts</li>
+        </ul>
+
+        <select id="purchaseOptionNFS" onchange="updatePrice('NFS')">
+            <option value="349">Primary Rental ₹349</option>
+            <option value="299">Secondary Rental ₹299</option>
+            <option value="699">Secondary Lifetime ₹699</option>
+            <option value="899">Primary Lifetime ₹899</option>
+        </select>
+
+        <button onclick="buyNow('NFS')">Buy Now</button>
+    </div>
+</div>
+
+<div class="product-detail">
+    <div class="product-image">
+        <img src="godofwarragnarok.jpg" alt="God of War Ragnarok">
+    </div>
+    <div class="product-info">
+        <h1>God of War Ragnarok</h1>
+        <p class="price" id="price-gow">₹549</p>
+        <ul class="details">
+            <li><strong>Genre:</strong> Action-Adventure</li>
+            <li><strong>Platform:</strong> PS5, PS4</li>
+            <li><strong>Release Date:</strong> 9 November 2022</li>
+            <li><strong>Developer:</strong> Santa Monica Studio</li>
+            <li><strong>Publisher:</strong> Sony Interactive Entertainment</li>
+        </ul>
+
+        <select id="purchaseOptionGOW" onchange="updatePrice('GOW')">
+            <option value="549">Primary Rental ₹549</option>
+            <option value="449">Secondary Rental ₹449</option>
+            <option value="1049">Secondary Lifetime ₹1049</option>
+            <option value="1649">Primary Lifetime ₹1649</option>
+        </select>
+
+        <button onclick="buyNow('GOW')">Buy Now</button>
+    </div>
+</div>
+
+<!-- Repeat for other games -->
+
+<script>
+    function updatePrice(game) {
+        var selectedOption = document.getElementById('purchaseOption' + game).value;
+        document.getElementById('price-' + game.toLowerCase()).textContent = '₹' + selectedOption;
+    }
+
+    function buyNow(game) {
+        var selectedOption = document.getElementById('purchaseOption' + game).value;
+        window.location.href = 'Enquire.html?option=' + encodeURIComponent(selectedOption);
+    }
+</script>
+
+</body>
+</html>

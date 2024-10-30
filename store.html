@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background: #1e1e24;
+      color: #ffffff;
+      padding: 15px 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .header h1 {
+      font-size: 1.8em;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    /* Navigation buttons as links */
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 15px;
+      flex-wrap: wrap; /* Wrap for smaller screens */
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 0;
+    }
+
+    nav ul li a {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #ff8c00;
+      color: white;
+      border-radius: 25px;
+      font-size: 1em; /* Adjusted for smaller screens */
+      text-transform: uppercase;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: #ff7000;
+    }
+
+    /* Search Section */
+    .search-container {
+      text-align: center;
+      padding: 20px 0;
+      margin-bottom: 30px;
+    }
+
+    #searchInput, #searchButton {
+      padding: 12px 15px; /* Adjusted padding */
+      border: 1px solid #444;
+      border-radius: 30px;
+      font-size: 16px;
+      background-color: #e9e9e9;
+      color: #000;
+      margin: 0 5px; /* Reduced margin */
+      width: calc(100% - 40px); /* Full width for better touch */
+    }
+
+    #searchButton {
+      background: #ff8c00;
+      color: white;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s ease;
+    }
+
+    #searchButton:hover {
+      background: #ff7000;
+    }
+
+    /* Product Grid */
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product {
+      background-color: #2d2d33;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .product img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .product img:hover {
+      transform: scale(1.1);
+    }
+
+    .price {
+      font-size: 1.2em;
+      color: #ff8c00;
+      margin: 10px 0;
+    }
+
+    .button {
+      display: block;
+      text-align: center;
+      padding: 12px 20px;
+      background: #ff8c00;
+      color: white;
+      text-transform: uppercase;
+      font-weight: 700;
+      border-radius: 30px;
+      margin: 10px auto;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background: #ff7000;
+    }
+
+    /* Platform Icons */
+    .platform-icons {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px; /* Reduced margin for better spacing */
+    }
+
+    .platform-icons img {
+      width: 40px; /* Adjusted size for mobile */
+      height: 40px;
+      margin: 0 5px; /* Reduced margin */
+      transition: transform 0.3s ease;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .platform-icons img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      .header h1 {
+        font-size: 1.5em; /* Adjust header size for mobile */
+      }
+
+      nav ul li a {
+        font-size: 0.9em; /* Smaller nav link font */
+      }
+
+      #searchInput, #searchButton {
+        width: 100%; /* Full width input and button */
+        margin: 5px 0; /* Spacing adjustments */
+      }
+
+      .container {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* More flexible grid */
+      }
+
+      .price {
+        font-size: 1.1em; /* Smaller price font */
+      }
+
+      .button {
+        padding: 10px 15px; /* Smaller button size */
+      }
+    }
+
+    /* Placeholder Sections */
+    .section {
+      padding: 50px 20px;
+      text-align: center;
+      background-color: #1e1e24;
+      margin: 20px 0;
+      border-radius: 10px;
+    }
+
+    /* Select Dropdown */
+    .pricing-options {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ff8c00;
+      border-radius: 5px;
+      background-color: #2d2d33;
+      color: #fff;
+    }
+
+    /* Availability Section */
+    .availability {
+      font-size: 1em;
+      color: #ff8c00;
+      margin: 10px 0;
+    }
+
+    /* Social Icons */
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .social-icons a {
+      margin: 0 10px;
+    }
+
+    .social-icons img {
+      width: 40px;
+      height: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <h1>Game Store</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#store">Store</a></li>
+    
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Search Section -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search for a game..." />
+    <button id="searchButton">Search</button>
+  </div>
+
+  <!-- Placeholder Section: Home -->
+  <div class="section" id="home">
+    <h2>Welcome to the Game Store!</h2>
+    <p>Discover the best games available for purchase.</p>
+  </div>
+</div>
+
+  <!-- Product Grid Section: Store -->
+ 
+
+  <!-- Placeholder Section: Contact -->
+  <div class="section" id="store">
+    <h2>Our Products</h2>
+    <div class="container" id="productGrid">
+      <div class="product" data-name="FC 25">
+        <img src="FC25.jpg" alt="FC 25" />
+        <div class="price" data-base-price="749">&#8377;749</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="749">Primary Rental - &#8377;749</option>
+          <option value="secondary-rental" data-price="699">Secondary Rental - &#8377;699</option>
+          <option value="offline" data-price="849">Offline - &#8377;849</option>
+          <option value="secondary-lifetime" data-price="1999">Secondary Lifetime - &#8377;1999</option>
+          <option value="primary-lifetime" data-price="2999">Primary Lifetime - &#8377;2999</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Silent Hill 2 Remake">
+        <img src="SilentHill2.jpg" alt="Silent Hill 2 Remake" />
+        <div class="price" data-base-price="849">&#8377;849</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="849">Primary Rental - &#8377;849</option>
+          <option value="secondary-rental" data-price="749">Secondary Rental - &#8377;749</option>
+          <option value="offline-permanent" data-price="799">Offline Permanent - &#8377;799</option>
+          <option value="secondary-lifetime" data-price="1649">Secondary Lifetime - &#8377;1649</option>
+          <option value="primary-lifetime" data-price="2649">Primary Lifetime - &#8377;2649</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Call of Duty BLACK OPS 6">
+        <img src="callofdutyblackops6.jpg" alt="Call of Duty BLACK OPS 6" />
+        <div class="price" data-base-price="949">&#8377;949</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="949">Primary Rental - &#8377;949</option>
+          <option value="secondary-rental" data-price="849">Secondary Rental - &#8377;849</option>
+          <option value="offline" data-price="999">Offline - &#8377;999</option>
+          <option value="secondary-lifetime" data-price="2249">Secondary Lifetime - &#8377;2249</option>
+          <option value="primary-lifetime" data-price="2999">Primary Lifetime - &#8377;2999</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="The Last Of Us Remastered 2016">
+        <img src="lastofus.jpg" alt="The Last Of Us Remastered 2016" />
+        <div class="price" data-base-price="699">&#8377;699</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="699">Primary Rental - &#8377;699</option>
+          <option value="secondary-rental" data-price="649">Secondary Rental - &#8377;649</option>
+          <option value="offline" data-price="749">Offline - &#8377;749</option>
+          <option value="secondary-lifetime" data-price="1649">Secondary Lifetime - &#8377;1649</option>
+          <option value="primary-lifetime" data-price="2649">Primary Lifetime - &#8377;2649</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Resident Evil 4 Remake">
+        <img src="residentevil4.jpg" alt="Resident Evil 4 Remake" />
+        <div class="price" data-base-price="449">&#8377;449</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="449">Primary Rental - &#8377;449</option>
+          <option value="secondary-rental" data-price="349">Secondary Rental - &#8377;349</option>
+          <option value="offline" data-price="399">Offline - &#8377;399</option>
+          <option value="secondary-lifetime" data-price="999">Secondary Lifetime - &#8377;999</option>
+          <option value="primary-lifetime" data-price="1449">Primary Lifetime - &#8377;1449</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="gtav">
+        <img src="GTAV.jpg" alt="Grand Theft Auto V" />
+        <div class="price" data-base-price="299">&#8377;299</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="299">Primary Rental - &#8377;299</option>
+          <option value="secondary-rental" data-price="249">Secondary Rental - &#8377;249</option>
+          <option value="offline" data-price="349">Offline - &#8377;349</option>
+          <option value="secondary-lifetime" data-price="649">Secondary Lifetime - &#8377;649</option>
+          <option value="primary-lifetime" data-price="799">Primary Lifetime - &#8377;799</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="hmmm.html" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Need for Speed Payback Deluxe Edition">
+        <img src="needforspeedpayback.jpg" alt="Need for Speed Payback Deluxe Edition" />
+        <div class="price" data-base-price="349">&#8377;349</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="349">Primary Rental - &#8377;349</option>
+          <option value="secondary-rental" data-price="299">Secondary Rental - &#8377;299</option>
+          <option value="offline" data-price="349">Offline - &#8377;349</option>
+          <option value="secondary-lifetime" data-price="699">Secondary Lifetime - &#8377;699</option>
+          <option value="primary-lifetime" data-price="899">Primary Lifetime - &#8377;899</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="needforspeed.html" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="God of War Ragnarok">
+        <img src="godofwar ragnaok.jpg" alt="God of War Ragnarok" />
+        <div class="price" data-base-price="549">&#8377;549</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="549">Primary Rental - &#8377;549</option>
+          <option value="secondary-rental" data-price="449">Secondary Rental - &#8377;449</option>
+          <option value="offline" data-price="599">Offline - &#8377;599</option>
+          <option value="secondary-lifetime" data-price="1049">Secondary Lifetime - &#8377;1049</option>
+          <option value="primary-lifetime" data-price="1649">Primary Lifetime - &#8377;1649</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="godofwarragonal.html" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Train Sim World 4">
+        <img src="trainsimworld4.jpg" alt="Train Sim World 4" />
+        <div class="price" data-base-price="349">&#8377;349</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="349">Primary Rental - &#8377;349</option>
+          <option value="secondary-rental" data-price="299">Secondary Rental - &#8377;299</option>
+          <option value="offline" data-price="349">Offline - &#8377;349</option>
+          <option value="secondary-lifetime" data-price="799">Secondary Lifetime - &#8377;799</option>
+          <option value="primary-lifetime" data-price="1199">Primary Lifetime - &#8377;1199</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Assassin's Creed: Mirage">
+        <img src="assassin's creed mirage.jpg" alt="Assassin's Creed: Mirage" />
+        <div class="price" data-base-price="449">&#8377;449</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="449">Primary Rental - &#8377;449</option>
+          <option value="secondary-rental" data-price="399">Secondary Rental - &#8377;399</option>
+          <option value="offline" data-price="499">Offline - &#8377;499</option>
+          <option value="secondary-lifetime" data-price="1049">Secondary Lifetime - &#8377;1049</option>
+          <option value="primary-lifetime" data-price="1449">Primary Lifetime - &#8377;1449</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="FC 24">
+        <img src="FC24.jpg" alt="FC 24" />
+        <div class="price" data-base-price="299">&#8377;299</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="299">Primary Rental - &#8377;299</option>
+          <option value="secondary-rental" data-price="249">Secondary Rental - &#8377;249</option>
+          <option value="offline" data-price="299">Offline - &#8377;299</option>
+          <option value="secondary-lifetime" data-price="899">Secondary Lifetime - &#8377;899</option>
+          <option value="primary-lifetime" data-price="1249">Primary Lifetime - &#8377;1249</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="FC24.html" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Resident Evil Village">
+        <img src="residentevilvillage.jpg" alt="Resident Evil Village" />
+        <div class="price" data-base-price="449">&#8377;449</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="449">Primary Rental - &#8377;449</option>
+          <option value="secondary-rental" data-price="349">Secondary Rental - &#8377;349</option>
+          <option value="offline" data-price="399">Offline - &#8377;399</option>
+          <option value="secondary-lifetime" data-price="899">Secondary Lifetime - &#8377;899</option>
+          <option value="primary-lifetime" data-price="1049">Primary Lifetime - &#8377;1049</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Hogwarts Legacy Deluxe Edition">
+        <img src="hogwarts legacy.jpg" alt="Hogwarts Legacy Deluxe Edition" />
+        <div class="price" data-base-price="449">&#8377;449</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="449">Primary Rental - &#8377;449</option>
+          <option value="secondary-rental" data-price="399">Secondary Rental - &#8377;399</option>
+          <option value="offline" data-price="499">Offline - &#8377;499</option>
+          <option value="secondary-lifetime" data-price="1049">Secondary Lifetime - &#8377;1049</option>
+          <option value="primary-lifetime" data-price="1499">Primary Lifetime - &#8377;1499</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Ride 4">
+        <img src="Ride4.jpg" alt="Ride 4" />
+        <div class="price" data-base-price="349">&#8377;349</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="349">Primary Rental - &#8377;349</option>
+          <option value="secondary-rental" data-price="249">Secondary Rental - &#8377;249</option>
+          <option value="offline" data-price="299">Offline - &#8377;299</option>
+          <option value="secondary-lifetime" data-price="849">Secondary Lifetime - &#8377;849</option>
+          <option value="primary-lifetime" data-price="949">Primary Lifetime - &#8377;949</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Cricket 24">
+        <img src="circket 24.jpg" alt="Cricket 24" />
+        <div class="price" data-base-price="449">&#8377;449</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="449">Primary Rental - &#8377;449</option>
+          <option value="secondary-rental" data-price="399">Secondary Rental - &#8377;399</option>
+          <option value="offline" data-price="549">Offline - &#8377;549</option>
+          <option value="secondary-lifetime" data-price="1099">Secondary Lifetime - &#8377;1099</option>
+          <option value="primary-lifetime" data-price="1749">Primary Lifetime - &#8377;1749</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Call of Duty: Modern Warfare 3">
+        <img src="callofdutymodernwalfare3.jpg" alt="Call of Duty: Modern Warfare 3" />
+        <div class="price" data-base-price="549">&#8377;549</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="549">Primary Rental - &#8377;549</option>
+          <option value="secondary-rental" data-price="449">Secondary Rental - &#8377;449</option>
+          <option value="offline" data-price="599">Offline - &#8377;599</option>
+          <option value="secondary-lifetime" data-price="1499">Secondary Lifetime - &#8377;1499</option>
+          <option value="primary-lifetime" data-price="1999">Primary Lifetime - &#8377;1999</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Remnant 2">
+        <img src="remnant 2.jpg" alt="Remnant 2" />
+        <div class="price" data-base-price="499">&#8377;499</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="499">Primary Rental - &#8377;499</option>
+          <option value="secondary-rental" data-price="399">Secondary Rental - &#8377;399</option>
+          <option value="offline" data-price="449">Offline - &#8377;449</option>
+          <option value="secondary-lifetime" data-price="999">Secondary Lifetime - &#8377;999</option>
+          <option value="primary-lifetime" data-price="1299">Primary Lifetime - &#8377;1299</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Red Dead Redemption 2">
+        <img src="rdr2.jpg" alt="Red Dead Redemption 2" />
+        <div class="price" data-base-price="349">&#8377;349</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="349">Primary Rental - &#8377;349</option>
+          <option value="secondary-rental" data-price="299">Secondary Rental - &#8377;299</option>
+          <option value="offline" data-price="399">Offline - &#8377;399</option>
+          <option value="secondary-lifetime" data-price="649">Secondary Lifetime - &#8377;649</option>
+          <option value="primary-lifetime" data-price="949">Primary Lifetime - &#8377;949</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="The Elder Scrolls V: Skyrim Deluxe Edition">
+        <img src="theelderscrollsv.jpg" alt="The Elder Scrolls V: Skyrim Deluxe Edition" />
+        <div class="price" data-base-price="349">&#8377;349</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="349">Primary Rental - &#8377;349</option>
+          <option value="secondary-rental" data-price="249">Secondary Rental - &#8377;249</option>
+          <option value="offline" data-price="299">Offline - &#8377;299</option>
+          <option value="secondary-lifetime" data-price="849">Secondary Lifetime - &#8377;849</option>
+          <option value="primary-lifetime" data-price="999">Primary Lifetime - &#8377;999</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Alan Wake 2">
+        <img src="alanwake2.jpg" alt="Alan Wake 2" />
+        <div class="price" data-base-price="499">&#8377;499</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="499">Primary Rental - &#8377;499</option>
+          <option value="secondary-rental" data-price="449">Secondary Rental - &#8377;449</option>
+          <option value="offline" data-price="549">Offline - &#8377;549</option>
+          <option value="secondary-lifetime" data-price="1299">Secondary Lifetime - &#8377;1299</option>
+          <option value="primary-lifetime" data-price="1999">Primary Lifetime - &#8377;1999</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Rise of the Ronin">
+        <img src="riseoftheronin.jpg" alt="Rise of the Ronin" />
+        <div class="price" data-base-price="699">&#8377;699</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="699">Primary Rental - &#8377;699</option>
+          <option value="secondary-rental" data-price="599">Secondary Rental - &#8377;599</option>
+          <option value="offline" data-price="649">Offline - &#8377;649</option>
+          <option value="secondary-lifetime" data-price="1599">Secondary Lifetime - &#8377;1599</option>
+          <option value="primary-lifetime" data-price="2349">Primary Lifetime - &#8377;2349</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="Tekken 8">
+        <img src="tekken8.jpg" alt="Tekken 8" />
+        <div class="price" data-base-price="799">&#8377;799</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="799">Primary Rental - &#8377;799</option>
+          <option value="secondary-rental" data-price="699">Secondary Rental - &#8377;699</option>
+          <option value="offline" data-price="749">Offline - &#8377;749</option>
+          <option value="secondary-lifetime" data-price="1449">Secondary Lifetime - &#8377;1449</option>
+          <option value="primary-lifetime" data-price="2249">Primary Lifetime - &#8377;2249</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+      <div class="product" data-name="SEKIRO: Shadows Die Twice">
+        <img src="sekiro.jpg" alt="SEKIRO: Shadows Die Twice" />
+        <div class="price" data-base-price="399">&#8377;399</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="399">Primary Rental - &#8377;399</option>
+          <option value="secondary-rental" data-price="349">Secondary Rental - &#8377;349</option>
+          <option value="offline" data-price="449">Offline - &#8377;449</option>
+          <option value="secondary-lifetime" data-price="849">Secondary Lifetime - &#8377;849</option>
+          <option value="primary-lifetime" data-price="1099">Primary Lifetime - &#8377;1099</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.jpg" alt="PS4" />
+        </div>
+      </div>
+  
+  
+      <div class="product" data-name="Demon's Souls">
+        <img src="demonsoul.jpg" alt="Demon's Souls" />
+        <div class="price" data-base-price="599">&#8377;599</div>
+        <select class="pricing-options" onchange="updatePrice(this)">
+          <option value="primary-rental" data-price="599">Primary Rental - &#8377;599</option>
+          <option value="secondary-rental" data-price="499">Secondary Rental - &#8377;499</option>
+          <option value="offline" data-price="649">Offline - &#8377;649</option>
+          <option value="secondary-lifetime" data-price="1499">Secondary Lifetime - &#8377;1499</option>
+          <option value="primary-lifetime" data-price="2499">Primary Lifetime - &#8377;2499</option>
+        </select>
+        <div class="availability">In Stock</div>
+        <a href="#" class="button">Add to Cart</a>
+        <div class="platform-icons">
+          <img src="ps5.png" alt="PS5" />
+          <img src="ps4.png" alt="PS4" />
+        </div>
+      </div>
+
+      <script>
+        function updatePrice(selectElement) {
+          // Get the selected option's price
+          const selectedOption = selectElement.options[selectElement.selectedIndex];
+          const price = selectedOption.getAttribute('data-price');
+          
+          // Find the price display element within the same product
+          const priceElement = selectElement.closest('.product').querySelector('.price');
+          
+          // Update the price display
+          priceElement.innerHTML = `&#8377;${price}`;
+        }
+      </script>
+    
+    <script>  
+      document.getElementById('searchInput').addEventListener('input', function() {  
+          const input = document.getElementById('searchInput').value.toLowerCase();  
+          const products = document.querySelectorAll('.product');  
+          let found = false;  
+          
+          products.forEach(function(product) {  
+              const productName = product.getAttribute('data-name').toLowerCase();  
+              if (productName.startsWith(input)) {  // Check if the name starts with input
+                  product.style.display = 'block';  // Show matching products  
+                  found = true;  
+              } else {  
+                  product.style.display = 'none';  // Hide non-matching products  
+              }  
+          });  
+          
+          if (!found && input !== '') {  
+              alert('No products found.');  
+          }  
+      });  
+  </script>
+  
+
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      background: #1e1e24;
+      color: #ffffff;
+      padding: 15px 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+
+    .header h1 {
+      font-size: 2em;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #f0f0f0;
+      font-size: 1.1em;
+      padding: 10px 15px;
+      transition: background 0.3s ease;
+      border-radius: 8px;
+    }
+
+    nav ul li a:hover {
+      background: linear-gradient(135deg, #ff8c00, #ff4e00);
+      color: #fff;
+    }
+
+    /* Platform Icons */
+    .platform-icons img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-left: 10px;
+      transition: transform 0.3s ease;
+      object-fit: cover;
+    }
+
+    .platform-icons img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('hero-banner.jpg') no-repeat center center;
+      background-size: cover;
+      height: 60vh;
+      color: white;
+      text-align: center;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    .hero-content h2 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    .hero-content p {
+      font-size: 1.3em;
+      margin: 10px 0;
+    }
+
+    .hero-content .button {
+      background: linear-gradient(135deg, #ff8c00, #ff4e00);
+      padding: 12px 30px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .hero-content .button:hover {
+      background: linear-gradient(135deg, #ff7000, #ff2e00);
+      transform: scale(1.08);
+    }
+
+    /* Search Section */
+    .search-container {
+      text-align: center;
+      padding: 20px 0;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #searchInput, #searchButton {
+      padding: 12px 20px;
+      border: 1px solid #444;
+      border-radius: 30px;
+      font-size: 16px;
+      background-color: #e9e9e9;
+      color: #000;
+    }
+
+    #searchButton {
+      background: #ff8c00;
+      color: white;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s ease;
+    }
+
+    #searchButton:hover {
+      background: #ff7000;
+    }
+
+    /* Product Grid */
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product {
+      background-color: #2d2d33;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+
+    .product img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .product img:hover {
+      transform: scale(1.1);
+    }
+
+    .product h5 {
+      padding: 15px;
+      font-size: 1.2em;
+      color: #ff8c00;
+    }
+
+    .button {
+      display: block;
+      text-align: center;
+      padding: 12px 25px;
+      background: #ff8c00;
+      color: white;
+      text-transform: uppercase;
+      font-weight: 700;
+      border-radius: 30px;
+      margin: 10px auto 20px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background: #ff7000;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1e1e24;
+      color: #f0f0f0;
+      padding: 30px;
+      text-align: center;
+    }
+
+    footer .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    footer .footer-content div {
+      flex: 1;
+      margin: 10px;
+    }
+
+    .about h3 {
+      margin-bottom: 10px;
+      color: #ff8c00;
+    }
+
+    .social-links img {
+      width: 35px;
+      margin: 0 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .social-links img:hover {
+      transform: scale(1.2);
+    }
+
+    .newsletter input {
+      padding: 12px;
+      border-radius: 25px;
+      border: none;
+      width: 70%;
+      margin-bottom: 10px;
+    }
+
+    .newsletter button {
+      padding: 12px 30px;
+      border-radius: 25px;
+      background-color: #ff8c00;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .newsletter button:hover {
+      background: #ff7000;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      /* Adjust header content for small screens */
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+      }
+
+      .header h1 {
+        font-size: 1.8em;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .platform-icons {
+        margin-top: 10px;
+      }
+
+      .platform-icons img {
+        width: 40px;
+        height: 40px;
+      }
+
+      /* Hero Section: Adjust for smaller screens */
+      .hero {
+        height: 50vh;
+      }
+
+      .hero-content h2 {
+        font-size: 2em;
+      }
+
+      .hero-content p {
+        font-size: 1.1em;
+      }
+
+      .hero-content .button {
+        padding: 10px 20px;
+      }
+
+      /* Search Section: Stack input and button */
+      .search-container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px 10px;
+      }
+
+      #searchInput, #searchButton {
+        width: 100%;
+      }
+
+      #searchInput {
+        margin-bottom: 10px;
+      }
+
+      /* Product Grid: Adjust grid layout */
+      .container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        padding: 10px;
+      }
+
+      .product img {
+        height: 150px;
+      }
+
+      .product h5 {
+        font-size: 1em;
+      }
+
+      /* Footer content: Stack vertically */
+      footer .footer-content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      footer .footer-content div {
+        margin-bottom: 20px;
+      }
+
+      .newsletter input {
+        width: 100%;
+      }
+
+      .newsletter button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <h1>Game Store</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="store.html">Store</a></li>
+  
+      </ul>
+    </nav>
+    <div class="platform-icons">
+      <img src="steam.jpg" alt="">
+      <img src="epicgames.jpg" alt="">
+      <img src="ubisoft.png" alt="">
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Discover the Latest Games</h2>
+      <p>Explore our vast collection of top-rated games</p>
+      <a href="#" class="button">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search for a game..." />
+    <button id="searchButton">Search</button>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="container" id="productGrid">
+    <div class="product" data-name="GTAV">
+      <img src="GTAV.jpg" alt="GTAV" />
+      <h5>GTAV</h5>
+      <a href="" class="button">Buy Now</a>
+    </div>
+    <div class="product" data-name="Cyberfunk">
+      <img src="Cyberfunk.jpg" alt="Cyberfunk" />
+      <h5>Cyberfunk</h5>
+      <a href="cyberfunk.html" class="button">Buy Now</a>
+    </div>
+    <div class="product" data-name="Silenthill2">
+      <img src="silenhill2.jpg" alt="Silenthill2" />
+      <h5>Silenthill2</h5>
+      <a href="#" class="button">Buy Now</a>
+    </div>
+    <div class="product" data-name="Forza Horizon 5">
+      <img src="Forza Horizon 5.jpg" alt="Forza Horizon 5" />
+      <h5>Forza Horizon 5</h5>
+      <a href="#" class="button">Buy Now</a>
+    </div>
+    <div class="product" data-name="Palworld">
+      <img src="palworld.jpg" alt="Palworld" />
+      <h5>Palworld</h5>
+      <a href="#" class="button">Buy Now</a>
+    </div>
+    <div class="product" data-name="Witcher 3">
+      <img src="Witcher 3.jpg" alt="Witcher 3" />
+      <h5>Witcher 3</h5>
+      <a href="#" class="button">Buy Now</a>
+    </div>
+    <div class="product" data-name="Call of Duty 3">
+      <img src="call of duty 3.jpg" alt="Call of Duty 3" />
+      <h5>Call of Duty 3</h5>
+      <a href="Enquire.html" class="button">Buy Now</a>
+    </div>
+    <div class="product" data-name="Black Myth: Wukong">
+      <img src="blackmythwukong.jpg" alt="BlackMyth:Wukong" />
+      <h5>Black Myth: Wukong</h5>
+      <a href="#" class="button">Buy Now</a>
+    </div>
+  </div>
+    <!-- Add more products as needed -->
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="about">
+        <h3>About Us</h3>
+        <p>Your one-stop destination for the latest video games and accessories.</p>
+      </div>
+      <div class="social-links">
+        <img src="intagram.jpg" alt="">
+        <img src="facebook.jpg" alt="">
+        
+      </div>
+      <div class="newsletter">
+        <h3>Join Our Newsletter</h3>
+        <input type="email" placeholder="Enter your email">
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('searchButton').addEventListener('click', function() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const products = document.querySelectorAll('.product');
+      let found = false;
+
+      products.forEach(function(product) {
+        const productName = product.getAttribute('data-name').toLowerCase();
+        if (productName.includes(input)) {
+          product.style.display = 'block'; // Show product
+          found = true;
+        } else {
+          product.style.display = 'none'; // Hide product
+        }
+      });
+
+      if (!found) {
+        alert('No products found.');
+      }
+    });
+  </script>
+
+</body>
+</html>

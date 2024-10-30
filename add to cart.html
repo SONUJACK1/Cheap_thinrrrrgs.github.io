@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Code and Google Pay</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+        }
+        .result {
+            display: none;
+            margin-top: 20px;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Form Section -->
+    <div id="formSection">
+        <h1>Redeem Code</h1>
+        <form id="redeemForm">
+            <label for="redeemCode">Redeem Code:</label>
+            <input type="text" id="redeemCode" name="redeemCode" required>
+
+            <label for="amount">Amount (in rupees):</label>
+            <input type="number" id="amount" name="amount" min="1" required>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div id="formMessage" class="error"></div>
+    </div>
+
+    <!-- Result Section -->
+    <div id="resultSection" class="result">
+        <h1>Result</h1>
+        <div id="resultMessage"></div>
+        <button id="payButton">Pay with Google Pay</button>
+    </div>
+</div>
+
+<script>
+    // Form submission handler
+    document.getElementById('redeemForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const redeemCode = document.getElementById('redeemCode').value.trim();
+        const amount = parseFloat(document.getElementById('amount').value.trim());
+        const formMessageDiv = document.getElementById('formMessage');
+        const resultSection = document.getElementById('resultSection');
+        const formSection = document.getElementById('formSection');
+        const resultMessageDiv = document.getElementById('resultMessage');
+        
+        // Basic validation
+        if (amount !== 40) {
+            formMessageDiv.textContent = 'The amount should be exactly 40 rupees.';
+            return;
+        }
+        
+        // Check if redeem code is valid
+        if (redeemCode === 'VALIDCODE') {
+            // Hide form section and show result section
+            formSection.style.display = 'none';
+            resultSection.style.display = 'block';
+            resultMessageDiv.textContent = 'Redeem code is valid and payment is successful!';
+            resultMessageDiv.className = 'success';
+
+            // Initialize Google Pay button
+            document.getElementById('payButton').addEventListener('click', function() {
+                initiateGooglePay();
+            });
+        } else {
+            formMessageDiv.textContent = 'Invalid redeem code.';
+        }
+    });
+
+    // Google Pay integration
+    function initiateGooglePay() {
+        const googlePayClient = new google.payments.api.PaymentsClient({environment: 'PRODUCTION'}); // Use 'PRODUCTION' for live
+
+        const paymentDataRequest = {
+            apiVersion: 2,
+            apiVersionMinor: 0,
+            allowedPaymentMethods: [{
+                type: 'CARD',
+                parameters: {
+                    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                    allowedNetworks: ['AMEX', 'DISCOVER', 'MASTERCARD', 'VISA'],
+                },
+                tokenizationSpecification: {
+                    type: 'PAYMENT_GATEWAY',
+                    parameters: {
+                        gateway: 'example', // Replace with your payment gateway
+                        gatewayMerchantId: 'exampleGatewayMerchantId'
+                    }
+                }
+            }],
+            merchantInfo: {
+                merchantId: '12345678901234567890', // Replace with your merchant ID
+                merchantName: 'Merchant Name'
+            },
+            transactionInfo: {
+                totalPriceStatus: 'FINAL',
+                totalPriceLabel: 'Total',
+                totalPrice: '40.00',
+                currencyCode: 'INR',
+                countryCode: 'IN'
+            },
+            callbackIntents: ['PAYMENT_AUTHORIZATION']
+        };
+
+        googlePayClient.loadPaymentData(paymentDataRequest)
+            .then(function(paymentData) {
+                // Handle the response
+                console.log('Payment data received:', paymentData);
+                // Process payment data and confirm transaction with your server
+            })
+            .catch(function(error) {
+                console.error('Error occurred during Google Pay transaction:', error);
+            });
+    }
+</script>
+
+<!-- Include Google Pay API script -->
+<script async src="https://pay.google.com/gp/p/js/pay.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Web Services</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1f1a36;
+            color: white;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ff3c7c, #333a6d);
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 100px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-info {
+            color: white;
+        }
+
+        .header-content h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        header button {
+            background-color: #ff3c7c;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .service {
+            background-color: #333a6d;
+            padding: 20px;
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+        }
+
+        .about-container {
+            background-color: #2c265a;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .step {
+            background-color: #333a6d;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        footer {
+            background-color: #18152a;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .social-links {
+            margin-top: 10px;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="contact-info">
+                <p>Call us: +123 456 7890</p>
+            </div>
+        </nav>
+        <div class="header-content">
+            <h1>Dynamic Web Services</h1>
+            <p>Build Your Stunning Website For Your Business And Online Presence.</p>
+            <button id="get-started">Get Started</button>
+            <button id="discover-more">Discover More</button>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services">
+        <h2>Why Choose Us</h2>
+        <p>Explore Our Services And Boost Your Business</p>
+        <div class="services-container">
+            <div class="service">
+                <h3>Instant Approach</h3>
+                <p>We offer quick responses and actions for your needs.</p>
+            </div>
+            <div class="service">
+                <h3>Customized Solutions</h3>
+                <p>Solutions tailored to meet your business goals.</p>
+            </div>
+            <div class="service">
+                <h3>Creative Solution</h3>
+                <p>Innovative ideas and designs to make your brand stand out.</p>
+            </div>
+            <div class="service">
+                <h3>Expert Team</h3>
+                <p>Professional experts delivering excellence.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>What We Do</h2>
+        <div class="about-container">
+            <div class="about-text">
+                <p>We offer comprehensive web design, UI/UX, development, and marketing solutions to help businesses grow.</p>
+                <button>View All Services</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process">
+        <h2>Our Process for Delivering Results</h2>
+        <div class="process-steps">
+            <div class="step">01. Send a Message</div>
+            <div class="step">02. Meet Our Team</div>
+            <div class="step">03. Get Consultation</div>
+            <div class="step">04. Start Project</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Dynamic Web Craft. All Rights Reserved.</p>
+        <div class="social-links">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript interactions
+        document.getElementById('get-started').addEventListener('click', function() {
+            alert("You clicked Get Started!");
+        });
+
+        document.getElementById('discover-more').addEventListener('click', function() {
+            alert("You clicked Discover More!");
+        });
+    </script>
+    
+</body>
+</html>
